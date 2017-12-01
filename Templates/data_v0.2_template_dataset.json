@@ -1,0 +1,13 @@
+{
+	"dataset_metadata": {
+		"device_name": "Wacom CTF_420/G",
+		"sampling_rate": 100,
+		"device_resolution": {
+			"W": 5105,
+			"H": 3713
+		},
+		"pressure_resolution": 512,
+		"misc": "DC 5V 0.14A USB\nPen (model FP-410-0G)"
+	},
+	"digitsets": []
+}
