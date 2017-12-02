@@ -28,3 +28,8 @@ class DataSetContract:
             USER_AGE = "user_age"
             USER_SEX = "user_sex"
             USER_HAND = "user_hand"
+
+            USER_SEX_MALE = "male"
+            USER_SEX_FEMAL = "female"
+            USER_HAND_RIGHT = "right"
+            USER_HAND_LEFT = "left"

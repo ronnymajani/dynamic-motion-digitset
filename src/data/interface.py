@@ -5,11 +5,6 @@ import config
 
 
 class User(object):
-    SEX_MALE = "Male"
-    SEX_FEMAL = "Female"
-    HAND_RIGHT = "Right"
-    HAND_LEFT = "Left"
-
     def __init__(self, age, sex, hand):
         if age <= 0:
             raise ValueError("Age should be > 0")

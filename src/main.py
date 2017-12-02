@@ -15,7 +15,7 @@ p = 0
 btn_down = 0
 
 # initialize dataset
-user = User(20, User.SEX_MALE, User.HAND_RIGHT)
+user = User(20, DataSetContract.DigitSets.Metadata.USER_SEX_MALE, DataSetContract.DigitSets.Metadata.USER_HAND_RIGHT)
 dataset = DataSet()
 digitset = DigitSet(user)
 raw_data = []
