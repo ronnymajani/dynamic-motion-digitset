@@ -1,8 +1,8 @@
 class DataSetContract:
-    VERSION = "0.2"
+    VERSION = "0.2.1"
 
-    JSON_DATASET_TEMPLATE = "../Templates/data_v0.2_template_dataset.json"
-    JSON_DIGITSET_TEMPLATE = "../Templates/data_v0.2_template_digitset.json"
+    JSON_DATASET_TEMPLATE = "../Templates/data_v0.2.1_template_dataset.json"
+    JSON_DIGITSET_TEMPLATE = "../Templates/data_v0.2.1_template_digitset.json"
 
     METADATA = "dataset_metadata"
     DIGITSETS = "digitsets"
@@ -26,5 +26,5 @@ class DataSetContract:
 
         class Metadata:
             USER_AGE = "user_age"
-            USER_SEX = "user_gender"
+            USER_SEX = "user_sex"
             USER_HAND = "user_hand"

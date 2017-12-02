@@ -24,7 +24,7 @@ raw_data = []
 phase = 0
 count = 0
 
-print("\nDigit [%d] (%d/%d)" % (phase, count, config.Defaults.SAMPLE_COUNT_PER_DIGIT))
+print("\nDigit [%d] (%d/%d)" % (phase, count+1, config.Defaults.SAMPLE_COUNT_PER_DIGIT))
 for event in device.read_loop():
     #    print(evdev.categorize(event))
     if event.type == evdev.ecodes.EV_KEY:
@@ -46,7 +46,7 @@ for event in device.read_loop():
                 if phase == 10:
                     break
 
-            print("\nDigit [%d] (%d/%d)" % (phase, count, config.Defaults.SAMPLE_COUNT_PER_DIGIT))
+            print("\nDigit [%d] (%d/%d)" % (phase, count+1, config.Defaults.SAMPLE_COUNT_PER_DIGIT))
 
         # Stop Loop
         elif event.code == evdev.ecodes.BTN_STYLUS:
@@ -64,7 +64,8 @@ for event in device.read_loop():
     if btn_down == 1:
         if event.type == evdev.ecodes.EV_SYN and event.code == evdev.ecodes.SYN_REPORT:
             raw_data.append((x, y, p))
-            print("(%d, %d, %d)" % (x, y, p))
+            # print("(%d, %d, %d)" % (x, y, p))
+            print(".", end="")
 
 #%%
 # append digitset to dataset
