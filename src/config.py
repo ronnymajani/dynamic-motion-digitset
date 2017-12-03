@@ -5,6 +5,9 @@ class Defaults(object):
     EXPORT_DIRECTORY_PATH = "../temp/"
     DATASET_FILENAME = "dataset.json"
     SAMPLE_COUNT_PER_DIGIT = 5
+    REFRESH_INTERVAL = 50
+    JSON_INDENT_LEVEL = None
+    JSON_SEPARATORS = (",", ":")
 
     DEVICE_NAME = "Wacom Volito2 CTF-420/G tablet"
     SAMPLING_RATE = 100
@@ -14,21 +17,18 @@ class Defaults(object):
     MISC = "Pen (model FP-410-0G)"
 
 
-class Settings(object):
+class Settings(Defaults):
     """
     Static Class to hold the global configuration of the application
     Variables:
+        :var EXPORT_DIRECTORY_PATH the path to the directory where exported files should be saved
         :var DATASET_SAVE_LOCATION the filename and path where the current dataset will be saved
         :var SAMPLE_COUNT_PER_DIGIT the number of repetitions per digit to collect from the user
             (eg: the number of times a user will enter the digit "1")
         :var REFRESH_INTERVAL the refresh interval in miliseconds at which a drawing panel is updated
+        :var JSON_INDENT_LEVEL the indent level to use when saving JSON files
+        :var JSON_SEPARATORS the separators to use when saving JSON files
     """
-    EXPORT_LOCATION = Defaults.EXPORT_DIRECTORY_PATH
-    DATASET_FILENAME = Defaults.DATASET_FILENAME
-    SAMPLE_COUNT_PER_DIGIT = Defaults.SAMPLE_COUNT_PER_DIGIT
-    REFRESH_INTERVAL = 50
-    JSON_INDENT_LEVEL = None
-    JSON_SEPARATORS = (",", ":")
 
     @staticmethod
     def as_json():
@@ -37,7 +37,7 @@ class Settings(object):
             "DATASET_FILENAME": Settings.DATASET_FILENAME,
             "SAMPLE_COUNT_PER_DIGIT": Settings.SAMPLE_COUNT_PER_DIGIT,
             "REFRESH_INTERVAL": Settings.REFRESH_INTERVAL,
-            "EXPORT_LOCATION": Settings.EXPORT_LOCATION,
+            "EXPORT_DIRECTORY_PATH": Settings.EXPORT_DIRECTORY_PATH,
             "JSON_INDENT_LEVEL": Settings.JSON_INDENT_LEVEL,
             "JSON_SEPARATORS": Settings.JSON_SEPARATORS
         }
@@ -48,8 +48,8 @@ class Settings(object):
         Settings.DATASET_FILENAME = config["DATASET_FILENAME"]
         Settings.SAMPLE_COUNT_PER_DIGIT = config["SAMPLE_COUNT_PER_DIGIT"]
         Settings.REFRESH_INTERVAL = config["REFRESH_INTERVAL"]
-        Settings.EXPORT_LOCATION = config["EXPORT_LOCATION"],
-        Settings.JSON_INDENT_LEVEL = config["JSON_INDENT_LEVEL"],
+        Settings.EXPORT_DIRECTORY_PATH = config["EXPORT_DIRECTORY_PATH"]
+        Settings.JSON_INDENT_LEVEL = config["JSON_INDENT_LEVEL"]
         Settings.JSON_SEPARATORS = config["JSON_SEPARATORS"]
 
     @staticmethod

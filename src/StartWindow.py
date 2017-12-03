@@ -1,4 +1,3 @@
-import sys
 from PyQt4 import QtCore, QtGui, uic
 import logging
 
@@ -61,10 +60,3 @@ class StartWindow(QtGui.QMainWindow, UI_StartWindow):
     # Main Events
     def closeEvent(self, event):
         self.logger.debug("Window Closed")
-
-
-if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    window = StartWindow()
-    window.show()
-    sys.exit(app.exec_())

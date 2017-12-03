@@ -58,7 +58,7 @@ class Server(object):
     def export_digitset(self):
         """Export the current Digit Set
         The file will be named 17.49.01.12.2017_digitset.json"""
-        filepath = config.Settings.EXPORT_LOCATION + time.strftime("%H.%M_%d.%m.%Y") + "_digitset.json"
+        filepath = config.Settings.EXPORT_DIRECTORY_PATH + time.strftime("%H.%M_%d.%m.%Y") + "_digitset.json"
         with open(filepath, "w") as fd:
             json.dump(self.activeDigitSet.as_json(), fd,
                       indent=config.Settings.JSON_INDENT_LEVEL,
@@ -67,7 +67,7 @@ class Server(object):
     def export_dataset(self):
         """Export the current Data Set
         This will overwrite any previous dataset if it has the same name as specified in the config"""
-        filepath = config.Settings.EXPORT_LOCATION + config.Settings.DATASET_FILENAME
+        filepath = config.Settings.EXPORT_DIRECTORY_PATH + config.Settings.DATASET_FILENAME
         with open(filepath, "w") as fd:
             json.dump(self.dataSet.as_json(), fd,
                       indent=config.Settings.JSON_INDENT_LEVEL,
