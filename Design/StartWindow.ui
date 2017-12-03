@@ -307,7 +307,6 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="actionSettings"/>
     <addaction name="actionExport"/>
    </widget>
    <addaction name="menuSettings"/>
