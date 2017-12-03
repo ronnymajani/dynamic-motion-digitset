@@ -31,14 +31,8 @@ class AsyncTask(threading.Thread):
             for event in self.device.read_loop():
                 # Only Run if the Task is in the RUNNING state
                 if self.state == AsyncTask.STATE_RUNNING:
-                    # Key Events
-                    if event.type == evdev.ecodes.EV_KEY:
-                        # Stylus is now touching or has stopped touching the pad
-                        if event.code == evdev.ecodes.BTN_TOUCH:
-                            self.isButtonDown = event.value
-                            self.logger.debug("stylus touch event: %d" % self.isButtonDown)  # todo: delete this line
                     # Coordinate Data Events (X, Y, P)
-                    elif event.type == evdev.ecodes.EV_ABS:
+                    if event.type == evdev.ecodes.EV_ABS:
                         if event.code == evdev.ecodes.ABS_X:
                             self.x = event.value
                         elif event.code == evdev.ecodes.ABS_Y:
@@ -46,8 +40,8 @@ class AsyncTask(threading.Thread):
                         elif event.code == evdev.ecodes.ABS_PRESSURE:
                             self.p = event.value
                     # Synchronization Events
-                    elif self.isButtonDown == 1:
-                        if event.type == evdev.ecodes.EV_SYN and event.code == evdev.ecodes.SYN_REPORT:
+                    elif event.type == evdev.ecodes.EV_SYN and event.code == evdev.ecodes.SYN_REPORT:
+                        if self.p != 0:
                             self.buffer.append((self.x, self.y, self.p))
                             self.logger.debug("(%d, %d, %d)" % (self.x, self.y, self.p))  # todo: delete this line
 
