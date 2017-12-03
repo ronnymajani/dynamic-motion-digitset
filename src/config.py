@@ -8,7 +8,7 @@ class Defaults(object):
     REFRESH_INTERVAL = 15
     JSON_INDENT_LEVEL = None
     JSON_SEPARATORS = (",", ":")
-    PEN_PRESSURE_MIN_THRESHOLD = 5
+    PEN_PRESSURE_MIN_THRESHOLD = 4
 
     DEVICE_NAME = "Wacom Volito2 CTF-420/G tablet"
     SAMPLING_RATE = 100

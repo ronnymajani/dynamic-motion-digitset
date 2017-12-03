@@ -30,6 +30,6 @@ class DataSetContract:
             USER_HAND = "user_hand"
 
             USER_SEX_MALE = "male"
-            USER_SEX_FEMAL = "female"
+            USER_SEX_FEMALE = "female"
             USER_HAND_RIGHT = "right"
             USER_HAND_LEFT = "left"

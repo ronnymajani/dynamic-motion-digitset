@@ -3,6 +3,7 @@ import logging
 
 import globals
 import data.interface
+from data.contract import DataSetContract
 
 from DrawingWindow import DrawingWindow
 from ExportWindow import ExportWindow
@@ -35,17 +36,20 @@ class StartWindow(QtGui.QMainWindow, UI_StartWindow):
     def get_user_info(self):
         age = self.Age_spinBox.value()
 
+        # todo: make sure that the UI file always coincides with this part of the code
+        # we assume that the first dropdown option is Male, and the second is Female for sex
+        # and for hand we assume the first to be Right, and the second to be Left
         sex = self.Sex_comboBox.currentIndex()
         if sex == 0:
-            sex = "male"
+            sex = DataSetContract.DigitSets.Metadata.USER_SEX_MALE
         else:
-            sex = "female"
+            sex = DataSetContract.DigitSets.Metadata.USER_SEX_FEMALE
 
         hand = self.Hand_comboBox.currentIndex()
         if hand == 0:
-            hand = "right"
+            hand = DataSetContract.DigitSets.Metadata.USER_HAND_RIGHT
         else:
-            hand = "left"
+            hand = DataSetContract.DigitSets.Metadata.USER_HAND_LEFT
 
         return age, sex, hand
 
