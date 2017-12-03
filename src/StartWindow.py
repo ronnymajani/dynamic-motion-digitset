@@ -5,6 +5,7 @@ import globals
 import data.interface
 
 from DrawingWindow import DrawingWindow
+from ExportWindow import ExportWindow
 
 # Set Logging
 logging.basicConfig(level=logging.DEBUG)
@@ -22,12 +23,14 @@ class StartWindow(QtGui.QMainWindow, UI_StartWindow):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
         self.drawing_window = None
+        self.settings_window = None
 
         self.register_buttons()
 
     def register_buttons(self):
         """Register the callback functions for the GUI buttons"""
         self.Start_pushButton.clicked.connect(self.event_start_button_clicked)
+        self.actionExport.triggered.connect(self.event_export_action_button_clicked)
 
     def get_user_info(self):
         age = self.Age_spinBox.value()
@@ -56,6 +59,13 @@ class StartWindow(QtGui.QMainWindow, UI_StartWindow):
         self.drawing_window = DrawingWindow(self)  # Create Drawing Window
         self.drawing_window.show()  # Show Drawing Window
         self.hide()  # Close this Window
+
+    def event_export_action_button_clicked(self):
+        """Export action button was clicked"""
+        self.logger.debug("export action button clicked")
+        self.settings_window = ExportWindow(self)
+        self.settings_window.show()
+        self.hide()
 
     # Main Events
     def closeEvent(self, event):

@@ -14,11 +14,11 @@ UI_DrawingWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
     def __init__(self, parent):
-        self.parent = parent
-
         QtGui.QMainWindow.__init__(self)
         UI_DrawingWindow.__init__(self)
         self.setupUi(self)
+
+        self.parent = parent
 
         self.canvas = Canvas.Canvas(self.drawing_panel)
 
@@ -43,7 +43,7 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.button_reset.clicked.connect(self.event_reset_button_clicked)
         self.button_cancel.clicked.connect(self.event_cancel_button_clicked)
 
-    # Our Events
+    # Our Events (Callback Functions)
     def event_next_button_clicked(self):
         self.logger.debug("next button clicked")
         globals.device_server.save_digit()

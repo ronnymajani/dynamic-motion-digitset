@@ -88,9 +88,7 @@ class DataSet(object):
 
     def __init__(self):
         # If the template has not been loaded, load it from the JSON file specified by DataSetContract
-        if DataSet._TEMPLATE is None:
-            DataSet._import_template()
-        self.json = DataSet._TEMPLATE.copy()
+        self.json = DataSet._get_template()
 
         # Set metadata
         self.update_metadata_info(name=config.Defaults.DEVICE_NAME,
@@ -121,6 +119,7 @@ class DataSet(object):
             metadata[contract_metadata.MISC] = misc
 
     def as_json(self):
+        """Returns this dataset's JSON dictionary"""
         return self.json
 
     def as_json_string(self):
@@ -128,7 +127,23 @@ class DataSet(object):
         return json.dumps(self.as_json(), indent=None, separators=(",", ":"), sort_keys=True)
 
     def add_digitset(self, digitset):
+        """Add a digitset to the dataset"""
         self.json[DataSetContract.DIGITSETS].append(digitset.as_json())
+
+    def merge_dataset(self, dataset):
+        """Merge another dataset into this one"""
+        for digitset in dataset.as_json()[DataSetContract.DIGITSETS]:
+            self.json[DataSetContract.DIGITSETS].append(digitset)
+
+    def reset_dataset(self):
+        self.json = DataSet._get_template()
+
+    @staticmethod
+    def _get_template():
+        """Returns a copy of the Data Set template if it exists, otherwise loaded it from memory first"""
+        if DataSet._TEMPLATE is None:
+            DataSet._import_template()
+        return DataSet._TEMPLATE.copy()
 
     @staticmethod
     def _import_template():
@@ -137,5 +152,12 @@ class DataSet(object):
         The template file is version specific, and is specified in the DataSetContract class
         """
         with open(DataSetContract.JSON_DATASET_TEMPLATE, "r") as fd:
-            DataSet._TEMPLATE = json.loads(fd.read())
+            DataSet._TEMPLATE = json.load(fd)
+
+    @staticmethod
+    def import_dataset(filepath):
+        ret = DataSet()
+        with open(filepath, "r") as fd:
+            ret.json = json.load(fd)
+        return ret
 
