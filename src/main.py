@@ -1,5 +1,7 @@
+from __future__ import print_function
 import evdev
 import json
+
 import data.contract
 from data.interface import *
 import config
