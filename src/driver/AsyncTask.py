@@ -41,7 +41,7 @@ class AsyncTask(threading.Thread):
                             self.p = event.value
                     # Synchronization Events
                     elif event.type == evdev.ecodes.EV_SYN and event.code == evdev.ecodes.SYN_REPORT:
-                        if self.p != 0:  # Is pen tip on pad?
+                        if self.p > 1:  # Is pen tip on pad?
                             self.buffer.append((self.x, self.y, self.p))
                             self.logger.debug("(%d, %d, %d)" % (self.x, self.y, self.p))
 
