@@ -2,7 +2,7 @@ import sys
 from PyQt4 import QtCore, QtGui, uic
 import logging
 
-import Panel
+import Canvas
 import config
 
 # Set Logging
@@ -20,7 +20,7 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         UI_DrawingWindow.__init__(self)
         self.setupUi(self)
 
-        self.panel = Panel.Panel(self.drawing_panel)
+        self.canvas = Canvas.Canvas(self.drawing_panel)
 
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
@@ -60,5 +60,6 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         """Refreshes and updates the GUI with new information"""
         # todo: update X, Y, P
         # todo: update drawing panel
+        self.canvas.draw()
         pass
 
