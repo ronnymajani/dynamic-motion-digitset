@@ -9,14 +9,16 @@ class User(object):
         if age <= 0:
             raise ValueError("Age should be > 0")
 
-        self.json = {
-            DataSetContract.DigitSets.Metadata.USER_AGE: age,
-            DataSetContract.DigitSets.Metadata.USER_SEX: sex,
-            DataSetContract.DigitSets.Metadata.USER_HAND: hand
-        }
+        self.age = age
+        self.sex = sex
+        self.hand = hand
 
     def as_json(self):
-        return self.json
+        return {
+            DataSetContract.DigitSets.Metadata.USER_AGE: self.age,
+            DataSetContract.DigitSets.Metadata.USER_SEX: self.sex,
+            DataSetContract.DigitSets.Metadata.USER_HAND: self.hand
+        }
 
 
 class DigitSet(object):

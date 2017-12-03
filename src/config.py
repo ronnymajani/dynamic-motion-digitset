@@ -2,7 +2,8 @@ import json
 
 
 class Defaults(object):
-    DATASET_FILENAME = "../temp/dataset.json"
+    EXPORT_DIRECTORY_PATH = "../temp/"
+    DATASET_FILENAME = "dataset.json"
     SAMPLE_COUNT_PER_DIGIT = 5
 
     DEVICE_NAME = "Wacom Volito2 CTF-420/G tablet"
@@ -22,25 +23,34 @@ class Settings(object):
             (eg: the number of times a user will enter the digit "1")
         :var REFRESH_INTERVAL the refresh interval in miliseconds at which a drawing panel is updated
     """
-    DATASET_SAVE_LOCATION = Defaults.DATASET_FILENAME
+    EXPORT_LOCATION = Defaults.EXPORT_DIRECTORY_PATH
+    DATASET_FILENAME = Defaults.DATASET_FILENAME
     SAMPLE_COUNT_PER_DIGIT = Defaults.SAMPLE_COUNT_PER_DIGIT
     REFRESH_INTERVAL = 250
+    JSON_INDENT_LEVEL = None
+    JSON_SEPARATORS = (",", ":")
 
     @staticmethod
     def as_json():
         """Return a JSON dictionary of the current settings"""
         return {
-            "DATASET_SAVE_LOCATION": Settings.DATASET_SAVE_LOCATION,
+            "DATASET_FILENAME": Settings.DATASET_FILENAME,
             "SAMPLE_COUNT_PER_DIGIT": Settings.SAMPLE_COUNT_PER_DIGIT,
-            "REFRESH_INTERVAL": Settings.REFRESH_INTERVAL
+            "REFRESH_INTERVAL": Settings.REFRESH_INTERVAL,
+            "EXPORT_LOCATION": Settings.EXPORT_LOCATION,
+            "JSON_INDENT_LEVEL": Settings.JSON_INDENT_LEVEL,
+            "JSON_SEPARATORS": Settings.JSON_SEPARATORS
         }
 
     @staticmethod
     def from_json(config):
         """Load settings from a given JSON dictionary"""
-        Settings.DATASET_SAVE_LOCATION = config["DATASET_SAVE_LOCATION"]
+        Settings.DATASET_FILENAME = config["DATASET_FILENAME"]
         Settings.SAMPLE_COUNT_PER_DIGIT = config["SAMPLE_COUNT_PER_DIGIT"]
         Settings.REFRESH_INTERVAL = config["REFRESH_INTERVAL"]
+        Settings.EXPORT_LOCATION = config["EXPORT_LOCATION"],
+        Settings.JSON_INDENT_LEVEL = config["JSON_INDENT_LEVEL"],
+        Settings.JSON_SEPARATORS = config["JSON_SEPARATORS"]
 
     @staticmethod
     def save_config_to_file(filename):
