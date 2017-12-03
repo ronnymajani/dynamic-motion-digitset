@@ -2,6 +2,7 @@ import sys
 from PyQt4 import QtCore, QtGui, uic
 import logging
 
+import globals
 import Canvas
 import config
 
@@ -52,14 +53,21 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
 
     # Main Events
     def closeEvent(self, event):
+        self.logger.info("Closing Window...")
+        # Detach this window from the Server
+        globals.device_server.detach_active_drawing_window()
+        # Show the parent window
         self.parent.show()
-        self.logger.info("Window Closed")
 
     # Update Function
     def update_panel(self):
         """Refreshes and updates the GUI with new information"""
-        # todo: update X, Y, P
-        # todo: update drawing panel
-        self.canvas.draw()
-        pass
+        # The AsyncTask connected to the device
+        async_task = globals.device_server.asyncTask
+        # update X, Y, P indicators
+        self.data_x_value.setText(str(async_task.x))
+        self.data_y_value.setText(str(async_task.y))
+        self.data_p_value.setText(str(async_task.p))
+        # todo: make sure that directly passing the buffer doesn't cause a problem
+        self.canvas.draw(async_task.buffer)
 

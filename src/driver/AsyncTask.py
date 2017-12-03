@@ -36,7 +36,7 @@ class AsyncTask(threading.Thread):
                         # Stylus is now touching or has stopped touching the pad
                         if event.code == evdev.ecodes.BTN_TOUCH:
                             self.isButtonDown = event.value
-                            self.logger.info("stylus touch event:", self.isButtonDown)  # todo: delete this line
+                            self.logger.info("stylus touch event: %d" % self.isButtonDown)  # todo: delete this line
                     # Coordinate Data Events (X, Y, P)
                     elif event.type == evdev.ecodes.EV_ABS:
                         if event.code == evdev.ecodes.ABS_X:

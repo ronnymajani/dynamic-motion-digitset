@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="tabShape">
-   <enum>QTabWidget::Rounded</enum>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame">
     <property name="geometry">
@@ -77,12 +74,12 @@
      </property>
      <item>
       <property name="text">
-       <string>Right Handed / Sağak</string>
+       <string extracomment="right">Right Handed / Sağak</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Left Handed / Solak</string>
+       <string extracomment="left">Left Handed / Solak</string>
       </property>
      </item>
     </widget>
@@ -109,12 +106,12 @@
      </property>
      <item>
       <property name="text">
-       <string>Male/Erkek</string>
+       <string extracomment="male">Male/Erkek</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Female/Dişi</string>
+       <string extracomment="female">Female/Dişi</string>
       </property>
      </item>
     </widget>

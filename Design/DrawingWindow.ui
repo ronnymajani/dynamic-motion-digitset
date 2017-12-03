@@ -212,7 +212,7 @@
       <string>Y:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="data_z_label">
+    <widget class="QLabel" name="data_p_label">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -268,7 +268,7 @@
       <string>0</string>
      </property>
     </widget>
-    <widget class="QLabel" name="data_z_value">
+    <widget class="QLabel" name="data_p_value">
      <property name="geometry">
       <rect>
        <x>40</x>

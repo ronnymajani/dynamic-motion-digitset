@@ -26,12 +26,16 @@ class Server(object):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
 
-        self.async_task = AsyncTask(device)
+        self.asyncTask = AsyncTask(device)
+        self.asyncTask.start()  # Start Async Task
         self.dataSet = DataSet()
         self.digitSets = []
-        self.digitSet = None
 
-        self.current_digit_phase = 0
+        # Externally set variables
+        self.activeDrawingWindow = None
+        self.activeDigitSet = None
+
+        self.currentDigitPhase = 0
         self.count = 0
 
     def export_digitset(self):
@@ -39,7 +43,7 @@ class Server(object):
         The file will be named 17.49.01.12.2017_digitset.json"""
         filepath = config.Settings.EXPORT_LOCATION + time.strftime("%H.%M_%d.%m.%Y") + "_digitset.json"
         with open(filepath, "w") as fd:
-            json.dump(self.digitSet.as_json(), fd,
+            json.dump(self.activeDigitSet.as_json(), fd,
                       indent=config.Settings.JSON_INDENT_LEVEL,
                       separators=config.Settings.JSON_SEPARATORS)
 
@@ -52,23 +56,31 @@ class Server(object):
                       indent=config.Settings.JSON_INDENT_LEVEL,
                       separators=config.Settings.JSON_SEPARATORS)
 
-    def set_activate_user(self, user):
+    def set_active_user(self, user):
         """Sets the active user and creates a digitset for that user"""
-        if self.digitSet is not None:
-            self.digitSets.append(self.digitSet)
+        if self.activeDigitSet is not None:
+            self.digitSets.append(self.activeDigitSet)
         # Create a new DigitSet for this user
-        self.digitSet = DigitSet(user)
+        self.activeDigitSet = DigitSet(user)
         # Set the AsyncTask to RUNNING
-        self.async_task.set_state_running()
+        self.asyncTask.set_state_running()
+
+    def attach_active_drawing_window(self, window):
+        """Attach the Server to the currently active Drawing Window"""
+        self.activeDrawingWindow = window
+
+    def detach_active_drawing_window(self):
+        """Detach the currently active Drawing Window from the Server"""
+        self.activeDrawingWindow = None
 
     def save_digit(self):
         """Save the drawn digit and increment the counter"""
         # Copy AsyncTask buffer
-        data = self.async_task.get_buffer_copy()
+        data = self.asyncTask.get_buffer_copy()
         # Save copy to Digit Set
-        self.digitSet.add_digit_data(self.current_digit_phase, data)
+        self.activeDigitSet.add_digit_data(self.currentDigitPhase, data)
         # Clear AsyncTask buffer
-        self.async_task.clear_buffer()
+        self.asyncTask.clear_buffer()
         # Update the counter
         self.__update_count()
 
@@ -77,27 +89,31 @@ class Server(object):
         self.count += 1
         if self.count == config.Settings.SAMPLE_COUNT_PER_DIGIT:
             self.__next_digit_phase()
-        # todo: update GUI
+        # Update attached drawing window
+        if self.activeDrawingWindow is not None:
+            self.activeDrawingWindow.count_progress_bar.setValue(self.count)
 
     def __next_digit_phase(self):
         """Called at the end of every phase"""
         self.count = 0
-        self.current_digit_phase += 1
-        if self.current_digit_phase == 10:
+        self.currentDigitPhase += 1
+        if self.currentDigitPhase == 10:
             self.__finished_digit_phases()
         else:
-            # todo: update GUI
-            pass
+            # Update attached drawing window
+            if self.activeDrawingWindow is not None:
+                self.activeDrawingWindow.phase_digit_label.setText(str(self.currentDigitPhase))
 
     def __finished_digit_phases(self):
         """Called when all phases are complete"""
         # Save the digitset to a file
         self.export_digitset()
         # Add the digitset to the dataset
-        self.dataSet.add_digitset(self.digitSet)
+        self.dataSet.add_digitset(self.activeDigitSet)
         # Reset the digitset reference variable to indicate that there is no active user
-        self.digitSet = None
+        self.activeDigitSet = None
         # Set the AsyncTask to IDLE
-        self.async_task.set_state_idle()
-        # todo: close Drawing Window
+        self.asyncTask.set_state_idle()
+        # Close Drawing Window
+        self.activeDrawingWindow.close()
 
