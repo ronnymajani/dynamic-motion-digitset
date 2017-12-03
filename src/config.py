@@ -5,9 +5,10 @@ class Defaults(object):
     EXPORT_DIRECTORY_PATH = "../temp/"
     DATASET_FILENAME = "dataset.json"
     SAMPLE_COUNT_PER_DIGIT = 5
-    REFRESH_INTERVAL = 50
+    REFRESH_INTERVAL = 15
     JSON_INDENT_LEVEL = None
     JSON_SEPARATORS = (",", ":")
+    PEN_PRESSURE_MIN_THRESHOLD = 5
 
     DEVICE_NAME = "Wacom Volito2 CTF-420/G tablet"
     SAMPLING_RATE = 100
@@ -28,6 +29,9 @@ class Settings(Defaults):
         :var REFRESH_INTERVAL the refresh interval in miliseconds at which a drawing panel is updated
         :var JSON_INDENT_LEVEL the indent level to use when saving JSON files
         :var JSON_SEPARATORS the separators to use when saving JSON files
+        :var PEN_PRESSURE_MIN_THRESHOLD the minimum pressure value that must be exceeded for the pen to be considered
+            'touching' the drawing pad. Needed because sometime small vibrations or rebound can cause a small pressure
+            reading which can lead to noisy readings
     """
 
     @staticmethod
@@ -39,7 +43,8 @@ class Settings(Defaults):
             "REFRESH_INTERVAL": Settings.REFRESH_INTERVAL,
             "EXPORT_DIRECTORY_PATH": Settings.EXPORT_DIRECTORY_PATH,
             "JSON_INDENT_LEVEL": Settings.JSON_INDENT_LEVEL,
-            "JSON_SEPARATORS": Settings.JSON_SEPARATORS
+            "JSON_SEPARATORS": Settings.JSON_SEPARATORS,
+            "PEN_PRESSURE_MIN_THRESHOLD": Settings.PEN_PRESSURE_MIN_THRESHOLD
         }
 
     @staticmethod
@@ -51,6 +56,7 @@ class Settings(Defaults):
         Settings.EXPORT_DIRECTORY_PATH = config["EXPORT_DIRECTORY_PATH"]
         Settings.JSON_INDENT_LEVEL = config["JSON_INDENT_LEVEL"]
         Settings.JSON_SEPARATORS = config["JSON_SEPARATORS"]
+        Settings.PEN_PRESSURE_MIN_THRESHOLD = config["PEN_PRESSURE_MIN_THRESHOLD"]
 
     @staticmethod
     def save_config_to_file(filename):

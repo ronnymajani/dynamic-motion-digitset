@@ -27,8 +27,8 @@ class Canvas(QtGui.QWidget):
         self.canvas = QtGui.QImage(data, self.width(), self.height(), QtGui.QImage.Format_RGB32)
 
         self.color = (0, 0, 0)
-        self.lineWidth = 1
-        self.pointRadius = 8
+        self.lineWidth = 10
+        self.pointRadius = 5
 
         # Set BG Color
         self.background_color = (255, 255, 255, 255)
@@ -76,9 +76,11 @@ class Canvas(QtGui.QWidget):
             for i in range(1, len(points)):
                 curr_point = scale(points[i])
                 # draw point
-                pygame.draw.circle(self.surface, self.color, curr_point, 1+int(points[i][2]*scale_p))
+                circle_radius = 1+int(points[i][2]*scale_p)
+                pygame.draw.circle(self.surface, self.color, curr_point, circle_radius)
                 # draw line between current and previous points
-                pygame.draw.line(self.surface, self.color, prev_point, curr_point, self.lineWidth)
+                line_width = 5+int(points[i][2] * 2 * scale_p)  # chosen by trial and error
+                pygame.draw.line(self.surface, self.color, prev_point, curr_point, line_width)
                 # set current point as "previous point"
                 prev_point = curr_point
 
