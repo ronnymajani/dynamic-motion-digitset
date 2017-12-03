@@ -80,7 +80,7 @@ class ExportWindow(QtGui.QMainWindow, UI_SettingsWindow):
         globals.device_server.export_dataset()
         # Reset loaded Data Set
         self.logger.debug("Resetting Data Set")
-        globals.device_server.dataSet.reset_dataset()
+        globals.device_server.dataSet.clear_digitsets()
         # Close window
         self.close()
 

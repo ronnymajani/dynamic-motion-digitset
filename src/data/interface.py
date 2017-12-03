@@ -1,4 +1,5 @@
 import json
+import copy
 
 from data.contract import DataSetContract
 import config
@@ -135,15 +136,16 @@ class DataSet(object):
         for digitset in dataset.as_json()[DataSetContract.DIGITSETS]:
             self.json[DataSetContract.DIGITSETS].append(digitset)
 
-    def reset_dataset(self):
-        self.json = DataSet._get_template()
+    def clear_digitsets(self):
+        """Delete all digitsets from this dataset"""
+        self.json[DataSetContract.DIGITSETS] = []
 
     @staticmethod
     def _get_template():
         """Returns a copy of the Data Set template if it exists, otherwise loaded it from memory first"""
         if DataSet._TEMPLATE is None:
             DataSet._import_template()
-        return DataSet._TEMPLATE.copy()
+        return copy.deepcopy(DataSet._TEMPLATE)
 
     @staticmethod
     def _import_template():
