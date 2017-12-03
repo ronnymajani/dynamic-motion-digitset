@@ -27,6 +27,8 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.logger.setLevel(logging.DEBUG)
 
         self.register_buttons()
+        # Attach this window to the Server
+        globals.device_server.attach_active_drawing_window(self)
 
         # Panel Updater timer
         self.timer = QtCore.QTimer(self)
@@ -43,12 +45,15 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
     # Our Events
     def event_next_button_clicked(self):
         self.logger.info("next button clicked")
+        globals.device_server.save_digit()
 
     def event_reset_button_clicked(self):
         self.logger.info("reset button clicked")
+        globals.device_server.reset_digit()
 
     def event_cancel_button_clicked(self):
         self.logger.info("cancel button clicked")
+        globals.device_server.reset_digit()
         self.close()
 
     # Main Events
@@ -56,12 +61,14 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.logger.info("Closing Window...")
         # Detach this window from the Server
         globals.device_server.detach_active_drawing_window()
+        self.timer.stop()
         # Show the parent window
         self.parent.show()
 
     # Update Function
     def update_panel(self):
         """Refreshes and updates the GUI with new information"""
+        self.logger.debug("Updating Panel")
         # The AsyncTask connected to the device
         async_task = globals.device_server.asyncTask
         # update X, Y, P indicators

@@ -5,6 +5,7 @@ import json
 from AsyncTask import AsyncTask
 from data.interface import DigitSet, DataSet
 import config
+from data.contract import DataSetContract
 
 
 class Server(object):
@@ -38,6 +39,18 @@ class Server(object):
         self.currentDigitPhase = 0
         self.count = 0
 
+    # Support Functions
+    def get_device_resolution_width(self):
+        return self.dataSet.json[DataSetContract.METADATA]\
+            [DataSetContract.Metadata.Device.RESOLUTION]\
+            [DataSetContract.Metadata.Device.RESOLUTION_WIDTH]
+
+    def get_device_resolution_height(self):
+        return self.dataSet.json[DataSetContract.METADATA]\
+            [DataSetContract.Metadata.Device.RESOLUTION]\
+            [DataSetContract.Metadata.Device.RESOLUTION_HEIGHT]
+
+    # Export Functions
     def export_digitset(self):
         """Export the current Digit Set
         The file will be named 17.49.01.12.2017_digitset.json"""
@@ -56,6 +69,7 @@ class Server(object):
                       indent=config.Settings.JSON_INDENT_LEVEL,
                       separators=config.Settings.JSON_SEPARATORS)
 
+    # Setup Functions
     def set_active_user(self, user):
         """Sets the active user and creates a digitset for that user"""
         if self.activeDigitSet is not None:
@@ -73,6 +87,11 @@ class Server(object):
         """Detach the currently active Drawing Window from the Server"""
         self.activeDrawingWindow = None
 
+    # Other Operations
+    def reset_digit(self):
+        self.asyncTask.clear_buffer()
+
+    # State Functions
     def save_digit(self):
         """Save the drawn digit and increment the counter"""
         # Copy AsyncTask buffer
@@ -84,6 +103,7 @@ class Server(object):
         # Update the counter
         self.__update_count()
 
+        # Private Functions
     def __update_count(self):
         """Called after user saves a drawn digit"""
         self.count += 1
@@ -91,6 +111,7 @@ class Server(object):
             self.__next_digit_phase()
         # Update attached drawing window
         if self.activeDrawingWindow is not None:
+            print(self.count)
             self.activeDrawingWindow.count_progress_bar.setValue(self.count)
 
     def __next_digit_phase(self):
