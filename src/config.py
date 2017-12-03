@@ -20,16 +20,19 @@ class Settings(object):
         :var DATASET_SAVE_LOCATION the filename and path where the current dataset will be saved
         :var SAMPLE_COUNT_PER_DIGIT the number of repetitions per digit to collect from the user
             (eg: the number of times a user will enter the digit "1")
+        :var REFRESH_INTERVAL the refresh interval in miliseconds at which a drawing panel is updated
     """
     DATASET_SAVE_LOCATION = Defaults.DATASET_FILENAME
     SAMPLE_COUNT_PER_DIGIT = Defaults.SAMPLE_COUNT_PER_DIGIT
+    REFRESH_INTERVAL = 250
 
     @staticmethod
     def as_json():
         """Return a JSON dictionary of the current settings"""
         return {
             "DATASET_SAVE_LOCATION": Settings.DATASET_SAVE_LOCATION,
-            "SAMPLE_COUNT_PER_DIGIT": Settings.SAMPLE_COUNT_PER_DIGIT
+            "SAMPLE_COUNT_PER_DIGIT": Settings.SAMPLE_COUNT_PER_DIGIT,
+            "REFRESH_INTERVAL": Settings.REFRESH_INTERVAL
         }
 
     @staticmethod
@@ -37,6 +40,7 @@ class Settings(object):
         """Load settings from a given JSON dictionary"""
         Settings.DATASET_SAVE_LOCATION = config["DATASET_SAVE_LOCATION"]
         Settings.SAMPLE_COUNT_PER_DIGIT = config["SAMPLE_COUNT_PER_DIGIT"]
+        Settings.REFRESH_INTERVAL = config["REFRESH_INTERVAL"]
 
     @staticmethod
     def save_config_to_file(filename):

@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.DEBUG)
 pygame.init()
 
 
-class PanelMap(QtGui.QWidget):
+class Panel(QtGui.QWidget):
     def __init__(self, parent):
         QtGui.QWidget.__init__(self, parent)
         self.setFixedWidth(parent.width())  # Set the width to match parent
