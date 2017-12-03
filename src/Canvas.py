@@ -24,9 +24,9 @@ class Canvas(QtGui.QWidget):
         data = self.surface.get_buffer().raw
         self.canvas = QtGui.QImage(data, self.width(), self.height(), QtGui.QImage.Format_RGB32)
 
-        self.color = (150, 150, 150)
+        self.color = (0, 0, 0)
         self.lineWidth = 1
-        self.pointRadius = 3
+        self.pointRadius = 8
 
         # Set BG Color
         self.background_color = (255, 255, 255, 255)
@@ -56,19 +56,20 @@ class Canvas(QtGui.QWidget):
         # todo: find a better way than to keep getting the device width and height on every call
         scale_x = float(self.canvas.width()) / float(globals.device_server.get_device_resolution_width())
         scale_y = float(self.canvas.height()) / float(globals.device_server.get_device_resolution_height())
+        scale_p = float(self.pointRadius) / float(globals.device_server.get_device_pen_resolution())
 
         def scale(point):
             return int(point[0]*scale_x), int(point[1]*scale_y)
 
         # draw first point
         prev_point = scale(points[0])
-        pygame.draw.circle(self.surface, self.color, prev_point, self.pointRadius, self.lineWidth)
+        pygame.draw.circle(self.surface, self.color, prev_point, 1+int(points[0][2]*scale_p))
         # draw lines
         if len(points) > 1:
             for i in range(1, len(points)):
                 curr_point = scale(points[i])
                 # draw point
-                pygame.draw.circle(self.surface, self.color, curr_point, self.pointRadius, self.lineWidth)
+                pygame.draw.circle(self.surface, self.color, curr_point, 1+int(points[i][2]*scale_p))
                 # draw line between current and previous points
                 pygame.draw.line(self.surface, self.color, prev_point, curr_point, self.lineWidth)
                 # set current point as "previous point"

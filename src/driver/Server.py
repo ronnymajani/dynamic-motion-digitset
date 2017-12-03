@@ -50,6 +50,10 @@ class Server(object):
             [DataSetContract.Metadata.Device.RESOLUTION]\
             [DataSetContract.Metadata.Device.RESOLUTION_HEIGHT]
 
+    def get_device_pen_resolution(self):
+        return self.dataSet.json[DataSetContract.METADATA]\
+            [DataSetContract.Metadata.Device.PEN_PRESSURE]
+
     # Export Functions
     def export_digitset(self):
         """Export the current Digit Set
