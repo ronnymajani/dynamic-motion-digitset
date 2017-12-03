@@ -24,7 +24,7 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.canvas = Canvas.Canvas(self.drawing_panel)
 
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
 
         self.register_buttons()
         # Attach this window to the Server
@@ -44,21 +44,21 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
 
     # Our Events
     def event_next_button_clicked(self):
-        self.logger.info("next button clicked")
+        self.logger.debug("next button clicked")
         globals.device_server.save_digit()
 
     def event_reset_button_clicked(self):
-        self.logger.info("reset button clicked")
+        self.logger.debug("reset button clicked")
         globals.device_server.reset_digit()
 
     def event_cancel_button_clicked(self):
-        self.logger.info("cancel button clicked")
+        self.logger.debug("cancel button clicked")
         globals.device_server.reset_digit()
         self.close()
 
     # Main Events
     def closeEvent(self, event):
-        self.logger.info("Closing Window...")
+        self.logger.debug("Closing Window...")
         # Detach this window from the Server
         globals.device_server.detach_active_drawing_window()
         self.timer.stop()
@@ -77,4 +77,5 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.data_p_value.setText(str(async_task.p))
         # todo: make sure that directly passing the buffer doesn't cause a problem
         self.canvas.draw(async_task.buffer)
+        self.repaint()
 

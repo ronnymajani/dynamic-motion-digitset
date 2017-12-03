@@ -14,7 +14,7 @@ class AsyncTask(threading.Thread):
         self.daemon = True
 
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
 
         self.device = evdev.InputDevice(device)
         self.buffer = []
@@ -36,7 +36,7 @@ class AsyncTask(threading.Thread):
                         # Stylus is now touching or has stopped touching the pad
                         if event.code == evdev.ecodes.BTN_TOUCH:
                             self.isButtonDown = event.value
-                            self.logger.info("stylus touch event: %d" % self.isButtonDown)  # todo: delete this line
+                            self.logger.debug("stylus touch event: %d" % self.isButtonDown)  # todo: delete this line
                     # Coordinate Data Events (X, Y, P)
                     elif event.type == evdev.ecodes.EV_ABS:
                         if event.code == evdev.ecodes.ABS_X:
@@ -49,7 +49,7 @@ class AsyncTask(threading.Thread):
                     elif self.isButtonDown == 1:
                         if event.type == evdev.ecodes.EV_SYN and event.code == evdev.ecodes.SYN_REPORT:
                             self.buffer.append((self.x, self.y, self.p))
-                            self.logger.info("(%d, %d, %d)" % (self.x, self.y, self.p))  # todo: delete this line
+                            self.logger.debug("(%d, %d, %d)" % (self.x, self.y, self.p))  # todo: delete this line
 
     # Support Functions
     def clear_buffer(self):
