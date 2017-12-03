@@ -1,7 +1,6 @@
 from PyQt4 import QtGui
 import pygame
 import logging
-import globals
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -10,6 +9,9 @@ pygame.init()
 
 class Canvas(QtGui.QWidget):
     def __init__(self, parent):
+        """
+        :param parent: the QT window of which this widget is a child of
+        """
         QtGui.QWidget.__init__(self, parent)
         self.setFixedWidth(parent.width())  # Set the width to match parent
         self.setFixedHeight(parent.height())  # Set the height to match parent
@@ -41,8 +43,14 @@ class Canvas(QtGui.QWidget):
         qp.drawImage(0, 0, self.canvas)
         qp.end()
 
-    def draw(self, points):
-        """Draw in the pygame buffer"""
+    def draw(self, points, resolution_x, resolution_y, resolution_p):
+        """
+        Draw in the pygame buffer
+        :param points: a list of 3d tuples in the form (X, Y, P) to draw
+        :param resolution_x: the horizontal resolution of the device
+        :param resolution_y: the vertical resolution of the device
+        :param resolution_p: the pressure resolution of the device
+        """
         self.surface.fill(self.background_color)
 
         # Make sure we actually have point to draw
@@ -53,10 +61,9 @@ class Canvas(QtGui.QWidget):
         # Each "point" in the list is a tuple in the form (X, Y, P)
         # and we are only interested in the X and Y values when drawing
 
-        # todo: find a better way than to keep getting the device width and height on every call
-        scale_x = float(self.canvas.width()) / float(globals.device_server.get_device_resolution_width())
-        scale_y = float(self.canvas.height()) / float(globals.device_server.get_device_resolution_height())
-        scale_p = float(self.pointRadius) / float(globals.device_server.get_device_pen_resolution())
+        scale_x = float(self.canvas.width()) / float(resolution_x)
+        scale_y = float(self.canvas.height()) / float(resolution_y)
+        scale_p = float(self.pointRadius) / float(resolution_p)
 
         def scale(point):
             return int(point[0]*scale_x), int(point[1]*scale_y)

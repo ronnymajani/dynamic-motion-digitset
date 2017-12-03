@@ -57,7 +57,7 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         globals.device_server.reset_digit()
         self.close()
 
-    # Main Events
+    # Qt Events
     def closeEvent(self, event):
         self.logger.debug("Closing Window...")
         # Detach this window from the Server
@@ -65,6 +65,12 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.timer.stop()
         # Show the parent window
         self.parent.show()
+
+    def keyPressEvent(self, QKeyEvent):
+        """Handle Keypress"""
+        if QKeyEvent.key() in (QtCore.Qt.Key_Return, QtCore.Qt.Key_Space):
+            self.event_next_button_clicked()
+        QtGui.QMainWindow.keyPressEvent(self, QKeyEvent)
 
     # Update Function
     def update_panel(self):
@@ -76,7 +82,13 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.data_x_value.setText(str(async_task.x))
         self.data_y_value.setText(str(async_task.y))
         self.data_p_value.setText(str(async_task.p))
+        # update Canvas
         # todo: make sure that directly passing the buffer doesn't cause a problem
-        self.canvas.draw(async_task.buffer)
+        # todo: find a better way than to keep getting the device width and height on every call
+        res_x = globals.device_server.get_device_resolution_width()
+        res_y = globals.device_server.get_device_resolution_height()
+        res_p = globals.device_server.get_device_pen_resolution()
+        self.canvas.draw(async_task.buffer, res_x, res_y, res_p)
+        # force QT to repaint window
         self.repaint()
 

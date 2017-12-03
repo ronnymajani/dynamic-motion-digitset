@@ -90,6 +90,18 @@ class Server(object):
     def detach_active_drawing_window(self):
         """Detach the currently active Drawing Window from the Server"""
         self.activeDrawingWindow = None
+        self.reset()
+
+    def reset(self):
+        """Resets the state of the server
+        Does not detach drawing window"""
+        # Set the AsyncTask to IDLE
+        self.asyncTask.set_state_idle()
+        # Reset phase and count
+        self.currentDigitPhase = 0
+        self.count = 0
+        # Reset the digitset reference variable to indicate that there is no active user
+        self.activeDigitSet = None
 
     # Other Operations
     def reset_digit(self):
@@ -134,10 +146,8 @@ class Server(object):
         self.export_digitset()
         # Add the digitset to the dataset
         self.dataSet.add_digitset(self.activeDigitSet)
-        # Reset the digitset reference variable to indicate that there is no active user
-        self.activeDigitSet = None
-        # Set the AsyncTask to IDLE
-        self.asyncTask.set_state_idle()
+        # Reset Server's state
+        self.reset()
         # Close Drawing Window
         self.activeDrawingWindow.close()
 
