@@ -92,12 +92,12 @@ class DataSet(object):
         self.json = DataSet._get_template()
 
         # Set metadata
-        self.update_metadata_info(name=config.Defaults.DEVICE_NAME,
-                                  sampling_rate=config.Defaults.SAMPLING_RATE,
-                                  resolution_width=config.Defaults.RESOLUTION_WIDTH,
-                                  resolution_height=config.Defaults.RESOLUTION_HEIGHT,
-                                  pen_pressure=config.Defaults.PEN_PRESSURE,
-                                  misc=config.Defaults.MISC)
+        self.update_metadata_info(name=config.Settings.DEVICE_NAME,
+                                  sampling_rate=config.Settings.SAMPLING_RATE,
+                                  resolution_width=config.Settings.RESOLUTION_WIDTH,
+                                  resolution_height=config.Settings.RESOLUTION_HEIGHT,
+                                  pen_pressure=config.Settings.PEN_PRESSURE,
+                                  misc=config.Settings.MISC)
 
     def update_metadata_info(self, name=None, sampling_rate=None,
                              resolution_width=None, resolution_height=None,

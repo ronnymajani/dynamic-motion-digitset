@@ -23,7 +23,7 @@ class Settings(Defaults):
     Static Class to hold the global configuration of the application
     Variables:
         :var EXPORT_DIRECTORY_PATH the path to the directory where exported files should be saved
-        :var DATASET_SAVE_LOCATION the filename and path where the current dataset will be saved
+        :var DATASET_FILENAME the filename and path where the current dataset will be saved
         :var SAMPLE_COUNT_PER_DIGIT the number of repetitions per digit to collect from the user
             (eg: the number of times a user will enter the digit "1")
         :var REFRESH_INTERVAL the refresh interval in miliseconds at which a drawing panel is updated
