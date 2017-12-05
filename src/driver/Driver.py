@@ -6,7 +6,7 @@ import copy
 import config
 
 
-class AsyncTask(threading.Thread):
+class Driver(threading.Thread):
     STATE_IDLE = 0
     STATE_RUNNING = 1
 
@@ -20,7 +20,7 @@ class AsyncTask(threading.Thread):
 
         self.device = evdev.InputDevice(device)
         self.buffer = []
-        self.state = AsyncTask.STATE_IDLE
+        self.state = Driver.STATE_IDLE
 
         self.isButtonDown = 0
 
@@ -32,7 +32,7 @@ class AsyncTask(threading.Thread):
         while True:
             for event in self.device.read_loop():
                 # Only Run if the Task is in the RUNNING state
-                if self.state == AsyncTask.STATE_RUNNING:
+                if self.state == Driver.STATE_RUNNING:
                     # Coordinate Data Events (X, Y, P)
                     if event.type == evdev.ecodes.EV_ABS:
                         if event.code == evdev.ecodes.ABS_X:
@@ -55,9 +55,9 @@ class AsyncTask(threading.Thread):
         return copy.copy(self.buffer)
 
     def set_state_running(self):
-        self.state = AsyncTask.STATE_RUNNING
+        self.state = Driver.STATE_RUNNING
 
     def set_state_idle(self):
-        self.state = AsyncTask.STATE_IDLE
+        self.state = Driver.STATE_IDLE
 
 

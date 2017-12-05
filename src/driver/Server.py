@@ -2,7 +2,7 @@ import logging
 import time
 import json
 
-from AsyncTask import AsyncTask
+from Driver import Driver
 from data.interface import DigitSet, DataSet
 import config
 from data.contract import DataSetContract
@@ -27,8 +27,8 @@ class Server(object):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
 
-        self.asyncTask = AsyncTask(device)
-        self.asyncTask.start()  # Start Async Task
+        self.driver = Driver(device)
+        self.driver.start()  # Start Async Task
         self.dataSet = DataSet()
         self.digitSets = []
 
@@ -80,8 +80,8 @@ class Server(object):
             self.digitSets.append(self.activeDigitSet)
         # Create a new DigitSet for this user
         self.activeDigitSet = DigitSet(user)
-        # Set the AsyncTask to RUNNING
-        self.asyncTask.set_state_running()
+        # Set the Driver to RUNNING
+        self.driver.set_state_running()
 
     def attach_active_drawing_window(self, window):
         """Attach the Server to the currently active Drawing Window"""
@@ -95,8 +95,8 @@ class Server(object):
     def reset(self):
         """Resets the state of the server
         Does not detach drawing window"""
-        # Set the AsyncTask to IDLE
-        self.asyncTask.set_state_idle()
+        # Set the Driver to IDLE
+        self.driver.set_state_idle()
         # Reset phase and count
         self.currentDigitPhase = 0
         self.count = 0
@@ -105,17 +105,17 @@ class Server(object):
 
     # Other Operations
     def reset_digit(self):
-        self.asyncTask.clear_buffer()
+        self.driver.clear_buffer()
 
     # State Functions
     def save_digit(self):
         """Save the drawn digit and increment the counter"""
-        # Copy AsyncTask buffer
-        data = self.asyncTask.get_buffer_copy()
+        # Copy Driver buffer
+        data = self.driver.get_buffer_copy()
         # Save copy to Digit Set
         self.activeDigitSet.add_digit_data(self.currentDigitPhase, data)
-        # Clear AsyncTask buffer
-        self.asyncTask.clear_buffer()
+        # Clear Driver buffer
+        self.driver.clear_buffer()
         # Update the counter
         self.__update_count()
 

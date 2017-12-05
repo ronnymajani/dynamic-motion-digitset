@@ -76,19 +76,19 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
     def update_panel(self):
         """Refreshes and updates the GUI with new information"""
         self.logger.debug("Updating Panel")
-        # The AsyncTask connected to the device
-        async_task = globals.device_server.asyncTask
+        # The Driver connected to the device
+        driver = globals.device_server.driver
         # update X, Y, P indicators
-        self.data_x_value.setText(str(async_task.x))
-        self.data_y_value.setText(str(async_task.y))
-        self.data_p_value.setText(str(async_task.p))
+        self.data_x_value.setText(str(driver.x))
+        self.data_y_value.setText(str(driver.y))
+        self.data_p_value.setText(str(driver.p))
         # update Canvas
         # todo: make sure that directly passing the buffer doesn't cause a problem
         # todo: find a better way than to keep getting the device width and height on every call
         res_x = globals.device_server.get_device_resolution_width()
         res_y = globals.device_server.get_device_resolution_height()
         res_p = globals.device_server.get_device_pen_resolution()
-        self.canvas.draw(async_task.buffer, res_x, res_y, res_p)
+        self.canvas.draw(driver.buffer, res_x, res_y, res_p)
         # force QT to repaint window
         self.repaint()
 
