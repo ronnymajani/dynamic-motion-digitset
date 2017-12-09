@@ -24,7 +24,7 @@ class StartWindow(QtGui.QMainWindow, UI_StartWindow):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
         self.drawing_window = None
-        self.settings_window = None
+        self.export_window = None
 
         self.register_buttons()
 
@@ -67,8 +67,8 @@ class StartWindow(QtGui.QMainWindow, UI_StartWindow):
     def event_export_action_button_clicked(self):
         """Export action button was clicked"""
         self.logger.debug("export action button clicked")
-        self.settings_window = ExportWindow(self)
-        self.settings_window.show()
+        self.export_window = ExportWindow(self)
+        self.export_window.show()
         self.hide()
 
     # Main Events
