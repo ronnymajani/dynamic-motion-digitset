@@ -31,7 +31,6 @@ class DigitSet(object):
             each element itself is a list of data
             each 'data' is a list of tuples in the form (X, Y, P) which represent the captured frames
             in chronological order
-        - json: a dictionary of the JSON data in this digitset
     """
     _TEMPLATE = None
 
@@ -46,8 +45,6 @@ class DigitSet(object):
         if DigitSet._TEMPLATE is None:
             DigitSet._import_template()
 
-        self.json = DigitSet._TEMPLATE.copy()
-
     def add_digit_data(self, digit, data):
         """Add new recorded handwritten digit data to the digitset
         Data should be a list of 3d tuples in the form (X, Y, P)
@@ -58,15 +55,17 @@ class DigitSet(object):
             self.data[digit].append(data)
 
     def as_json(self):
-        # Synchronize user data with JSON dictionary
-        self.json[DataSetContract.DigitSets.METADATA] = self.user.as_json()
+        # Create JSON Dictionary from DigitSet template
+        json_data = DigitSet._TEMPLATE.copy()
+        # Fill in the metadata
+        json_data[DataSetContract.DigitSets.METADATA] = self.user.as_json()
 
-        # Synchronize digit data with JSON dictionary
+        # Copy over the digit data to the JSON dictionary
         for i in range(10):
             key = str(i)
-            self.json[DataSetContract.DigitSets.DIGITS][key] = self.data[i]
+            json_data[DataSetContract.DigitSets.DIGITS][key] = self.data[i]
 
-        return self.json
+        return json_data
 
     @staticmethod
     def _import_template():
