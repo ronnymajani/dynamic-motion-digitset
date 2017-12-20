@@ -23,6 +23,8 @@ if __name__ == '__main__':
     # Create logger and set logging level
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
+    # Initialize Global variables
+    globals.init_globals()
     # Load Configuration
     load_config()
     # Create Qt Application
