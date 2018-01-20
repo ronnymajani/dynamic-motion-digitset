@@ -1,8 +1,10 @@
+import os
 import json
+import logging
 
 
 class Defaults(object):
-    EXPORT_DIRECTORY_PATH = "../temp/"
+    EXPORT_DIRECTORY_PATH = "../output/"
     DATASET_FILENAME = "dataset.json"
     SAMPLE_COUNT_PER_DIGIT = 5
     REFRESH_INTERVAL = 15
@@ -33,6 +35,7 @@ class Settings(Defaults):
             'touching' the drawing pad. Needed because sometime small vibrations or rebound can cause a small pressure
             reading which can lead to noisy readings
     """
+    logger = logging.getLogger("SETTINGS")
 
     @staticmethod
     def as_json():
@@ -59,15 +62,27 @@ class Settings(Defaults):
         Settings.PEN_PRESSURE_MIN_THRESHOLD = config["PEN_PRESSURE_MIN_THRESHOLD"]
 
     @staticmethod
+    def initialize():
+        """This performs any and all initializations necessary after a configuration is created or loaded"""
+        Settings.logger.debug("Initializing configuration")
+        # Create EXPORT Directory if it doesn't exist
+        if not os.path.exists(Settings.EXPORT_DIRECTORY_PATH):
+            Settings.logger.info("Export Directory [%s] does not exist! Creating it now..." % Settings.EXPORT_DIRECTORY_PATH)
+            os.mkdir(Settings.EXPORT_DIRECTORY_PATH)
+
+    @staticmethod
     def save_config_to_file(filename):
         """Save the current settings to the specified JSON file"""
+        Settings.logger.debug("Saving configuration to file [%s]" % filename)
         with open(filename, "w") as fd:
             json.dump(Settings.as_json(), fd, indent=2)
 
     @staticmethod
     def load_config_from_file(filename):
-        """Load settings from the specified JSON file"""
+        Settings.logger.debug("Loading configuration from file [%s]" % filename)
+        """Load settings from the specified JSON file, then initialize the loaded configuration"""
         with open(filename, "r") as fd:
             Settings.from_json(json.load(fd))
+        Settings.initialize()
 
 

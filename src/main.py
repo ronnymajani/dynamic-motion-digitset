@@ -15,8 +15,13 @@ def load_config():
         logger.info("Config file found, loading settings from [%s]" % globals.CONFIG_FILE)
         config.Settings.load_config_from_file(globals.CONFIG_FILE)
     else:  # create file
+        # if the folder doesn't exist, create it
+        if not os.path.exists(globals.CONFIG_FILE_FOLDER):
+            logger.info("The folder [%s] doesn't exist. Creating it now" % globals.CONFIG_FILE_FOLDER)
+            os.mkdir(globals.CONFIG_FILE_FOLDER)
         logger.info("No config file exists, creating one in [%s]" % globals.CONFIG_FILE)
         config.Settings.save_config_to_file(globals.CONFIG_FILE)
+        config.Settings.initialize()
 
 
 if __name__ == '__main__':
