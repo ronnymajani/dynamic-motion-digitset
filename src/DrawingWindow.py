@@ -70,6 +70,8 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         """Handle Keypress"""
         if QKeyEvent.key() in (QtCore.Qt.Key_Return, QtCore.Qt.Key_Space):
             self.event_next_button_clicked()
+        elif QKeyEvent.key() == QtCore.Qt.Key_R:
+            self.event_reset_button_clicked()
         QtGui.QMainWindow.keyPressEvent(self, QKeyEvent)
 
     # Update Function
