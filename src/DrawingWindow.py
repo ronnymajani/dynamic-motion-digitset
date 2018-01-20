@@ -28,6 +28,7 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.register_buttons()
         # set max counts in progresss bar
         self.count_progress_bar.setMaximum(config.Settings.SAMPLE_COUNT_PER_DIGIT)
+        self.count_progress_bar.setValue(config.Settings.SAMPLE_COUNT_PER_DIGIT)
         # Attach this window to the Server
         globals.device_server.attach_active_drawing_window(self)
 

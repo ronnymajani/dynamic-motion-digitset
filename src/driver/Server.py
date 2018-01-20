@@ -127,7 +127,8 @@ class Server(object):
             self.__next_digit_phase()
         # Update attached drawing window
         if self.activeDrawingWindow is not None:
-            self.activeDrawingWindow.count_progress_bar.setValue(self.count+1)
+            times_left = config.Settings.SAMPLE_COUNT_PER_DIGIT - self.count
+            self.activeDrawingWindow.count_progress_bar.setValue(times_left)
 
     def __next_digit_phase(self):
         """Called at the end of every phase"""
