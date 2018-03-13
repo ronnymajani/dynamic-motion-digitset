@@ -29,8 +29,9 @@ class Driver(threading.Thread):
         self.p = 0
         self.t = 0.0
 
+        self._prev_time = 0.0
+
     def run(self):
-        prev_time = 0.0
         while True:
             for event in self.device.read_loop():
                 # Only Run if the Task is in the RUNNING state
@@ -47,17 +48,18 @@ class Driver(threading.Thread):
                     elif event.type == evdev.ecodes.EV_SYN and event.code == evdev.ecodes.SYN_REPORT:
                         if self.p > config.Settings.PEN_PRESSURE_MIN_THRESHOLD:  # Is pen tip on pad?
                             curr_time = event.timestamp()
-                            if prev_time == 0.0:
+                            if self._prev_time == 0.0:
                                 self.t = 0.0
                             else:
-                                self.t = round((curr_time - prev_time) * 1000.0, 3)
+                                self.t = round((curr_time - self._prev_time) * 1000.0, 3)
                             self.buffer.append((self.x, self.y, self.p, self.t))
-                            self.logger.info("(%d, %d, %d, %f)" % (self.x, self.y, self.p, self.t))
-                            prev_time = curr_time
+                            self.logger.info("(%d, %d, %d, %.3f)" % (self.x, self.y, self.p, self.t))
+                            self._prev_time = curr_time
 
     # Support Functions
     def clear_buffer(self):
         self.buffer = []
+        self._prev_time = 0.0
 
     def get_buffer_copy(self):
         return copy.copy(self.buffer)

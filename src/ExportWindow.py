@@ -46,6 +46,7 @@ class ExportWindow(QtGui.QMainWindow, UI_SettingsWindow):
         self.load_values()
 
     def load_values(self):
+        # todo: check for version incompatibilities
         self.logger.debug("Loading values")
         json = globals.device_server.dataSet.as_json()  # reference to the currently loaded dataset
         metadata = json[DataSetContract.METADATA]  # reference object to the metdata field in the dataset
@@ -53,6 +54,7 @@ class ExportWindow(QtGui.QMainWindow, UI_SettingsWindow):
         contract_device = contract_metadata.Device  # reference to the DataSetContract Metadata"s Device class
         self.device_name_value.setText(metadata[contract_device.NAME])
         self.misc_textEdit.setPlainText(metadata[contract_metadata.MISC])
+        self.data_version_value.setText(metadata[contract_metadata.VERSION])
         self.pressure_spinBox.setValue(metadata[contract_device.PEN_PRESSURE])
         self.sampling_rate_spinBox.setValue(metadata[contract_device.SAMPLING_RATE])
         self.resolution_width_spinBox.setValue(metadata[contract_device.RESOLUTION][contract_device.RESOLUTION_WIDTH])

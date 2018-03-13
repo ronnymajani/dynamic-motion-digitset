@@ -7,6 +7,7 @@
 			"H": 3713
 		},
 		"pressure_resolution": 512,
+		"version": "v1.0",
 		"misc": "DC 5V 0.14A USB\nPen (model FP-410-0G)"
 	},
 	"digitsets": []

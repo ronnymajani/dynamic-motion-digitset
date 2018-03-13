@@ -359,6 +359,32 @@
      <string>SAVE</string>
     </property>
    </widget>
+   <widget class="QLabel" name="data_version_label">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>330</y>
+      <width>91</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Data Version:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_version_value">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>330</y>
+      <width>66</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>v1.0</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

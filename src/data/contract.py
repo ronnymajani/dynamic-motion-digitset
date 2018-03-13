@@ -1,13 +1,14 @@
 class DataSetContract:
-    VERSION = "0.3"
+    VERSION = "1.0"
 
-    JSON_DATASET_TEMPLATE = "../Templates/data_v0.3_template_dataset.json"
-    JSON_DIGITSET_TEMPLATE = "../Templates/data_v0.3_template_digitset.json"
+    JSON_DATASET_TEMPLATE = "../Templates/data_v%s_template_dataset.json" % VERSION
+    JSON_DIGITSET_TEMPLATE = "../Templates/data_v%s_template_digitset.json" % VERSION
 
     METADATA = "dataset_metadata"
     DIGITSETS = "digitsets"
 
     class Metadata:
+        VERSION = "version"
         MISC = "misc"
 
         class Device:
