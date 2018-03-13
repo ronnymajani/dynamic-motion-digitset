@@ -24,6 +24,13 @@ class DataSetContract:
         METADATA = "digitset_metadata"
         DIGITS = "digits"
         Digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        # The indices of each value in a sample
+        SampleIndices = {
+            "X": 0,
+            "Y": 1,
+            "P": 2,
+            "t": 3
+        }
 
         class Metadata:
             USER_AGE = "user_age"

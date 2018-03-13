@@ -1,6 +1,7 @@
 from PyQt4 import QtGui
 import pygame
 import logging
+from data.contract import DataSetContract
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -52,6 +53,10 @@ class Canvas(QtGui.QWidget):
         :param resolution_p: the pressure resolution of the device
         """
         self.surface.fill(self.background_color)
+        indices = DataSetContract.DigitSets.SampleIndices
+        x_idx = indices["X"]
+        y_idx = indices["Y"]
+        p_idx = indices["P"]
 
         # Make sure we actually have point to draw
         if len(points) < 1:
@@ -66,20 +71,20 @@ class Canvas(QtGui.QWidget):
         scale_p = float(self.pointRadius) / float(resolution_p)
 
         def scale(point):
-            return int(point[0]*scale_x), int(point[1]*scale_y)
+            return int(point[x_idx]*scale_x), int(point[y_idx]*scale_y)
 
         # draw first point
         prev_point = scale(points[0])
-        pygame.draw.circle(self.surface, self.color, prev_point, 1+int(points[0][2]*scale_p))
+        pygame.draw.circle(self.surface, self.color, prev_point, 1+int(points[0][p_idx]*scale_p))
         # draw lines
         if len(points) > 1:
             for i in range(1, len(points)):
                 curr_point = scale(points[i])
                 # draw point
-                circle_radius = 1+int(points[i][2]*scale_p)
+                circle_radius = 1+int(points[i][p_idx]*scale_p)
                 pygame.draw.circle(self.surface, self.color, curr_point, circle_radius)
                 # draw line between current and previous points
-                line_width = 5+int(points[i][2] * 2 * scale_p)  # chosen by trial and error
+                line_width = 5+int(points[i][p_idx] * 2 * scale_p)  # chosen by trial and error
                 pygame.draw.line(self.surface, self.color, prev_point, curr_point, line_width)
                 # set current point as "previous point"
                 prev_point = curr_point
