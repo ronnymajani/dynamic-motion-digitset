@@ -1,8 +1,8 @@
 class DataSetContract:
-    VERSION = "0.2.1"
+    VERSION = "0.3"
 
-    JSON_DATASET_TEMPLATE = "../Templates/data_v0.2.1_template_dataset.json"
-    JSON_DIGITSET_TEMPLATE = "../Templates/data_v0.2.1_template_digitset.json"
+    JSON_DATASET_TEMPLATE = "../Templates/data_v0.3_template_dataset.json"
+    JSON_DIGITSET_TEMPLATE = "../Templates/data_v0.3_template_digitset.json"
 
     METADATA = "dataset_metadata"
     DIGITSETS = "digitsets"
