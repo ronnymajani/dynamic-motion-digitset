@@ -53,7 +53,7 @@ class Canvas(QtGui.QWidget):
         :param resolution_p: the pressure resolution of the device
         """
         self.surface.fill(self.background_color)
-        indices = DataSetContract.DigitSets.SampleIndices
+        indices = DataSetContract.DigitSet.Frame.indices
         x_idx = indices["X"]
         y_idx = indices["Y"]
         p_idx = indices["P"]

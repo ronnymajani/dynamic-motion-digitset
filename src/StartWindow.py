@@ -41,15 +41,15 @@ class StartWindow(QtGui.QMainWindow, UI_StartWindow):
         # and for hand we assume the first to be Right, and the second to be Left
         sex = self.Sex_comboBox.currentIndex()
         if sex == 0:
-            sex = DataSetContract.DigitSets.Metadata.USER_SEX_MALE
+            sex = DataSetContract.DigitSet.Metadata.USER_SEX_MALE
         else:
-            sex = DataSetContract.DigitSets.Metadata.USER_SEX_FEMALE
+            sex = DataSetContract.DigitSet.Metadata.USER_SEX_FEMALE
 
         hand = self.Hand_comboBox.currentIndex()
         if hand == 0:
-            hand = DataSetContract.DigitSets.Metadata.USER_HAND_RIGHT
+            hand = DataSetContract.DigitSet.Metadata.USER_HAND_RIGHT
         else:
-            hand = DataSetContract.DigitSets.Metadata.USER_HAND_LEFT
+            hand = DataSetContract.DigitSet.Metadata.USER_HAND_LEFT
 
         return age, sex, hand
 

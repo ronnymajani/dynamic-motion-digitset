@@ -16,9 +16,9 @@ class User(object):
 
     def as_json(self):
         return {
-            DataSetContract.DigitSets.Metadata.USER_AGE: self.age,
-            DataSetContract.DigitSets.Metadata.USER_SEX: self.sex,
-            DataSetContract.DigitSets.Metadata.USER_HAND: self.hand
+            DataSetContract.DigitSet.Metadata.USER_AGE: self.age,
+            DataSetContract.DigitSet.Metadata.USER_SEX: self.sex,
+            DataSetContract.DigitSet.Metadata.USER_HAND: self.hand
         }
 
 
@@ -58,12 +58,12 @@ class DigitSet(object):
         # Create JSON Dictionary from DigitSet template
         json_data = DigitSet._TEMPLATE.copy()
         # Fill in the metadata
-        json_data[DataSetContract.DigitSets.METADATA] = self.user.as_json()
+        json_data[DataSetContract.DigitSet.METADATA] = self.user.as_json()
 
         # Copy over the digit data to the JSON dictionary
         for i in range(10):
             key = str(i)
-            json_data[DataSetContract.DigitSets.DIGITS][key] = self.data[i]
+            json_data[DataSetContract.DigitSet.DIGITS][key] = self.data[i]
 
         return json_data
 
