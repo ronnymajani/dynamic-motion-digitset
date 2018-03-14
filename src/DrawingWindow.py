@@ -85,7 +85,7 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.data_x_value.setText(str(driver.x))
         self.data_y_value.setText(str(driver.y))
         self.data_p_value.setText(str(driver.p))
-        self.data_t_value.setText(str(driver.t))
+        self.data_dt_value.setText(str(driver.dt))
         # update Canvas
         # todo: make sure that directly passing the buffer doesn't cause a problem
         # todo: find a better way than to keep getting the device width and height on every call

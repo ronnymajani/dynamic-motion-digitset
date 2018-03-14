@@ -27,7 +27,7 @@ class Driver(threading.Thread):
         self.x = 0
         self.y = 0
         self.p = 0
-        self.t = 0.0
+        self.dt = 0.0
 
         self._prev_time = 0.0
 
@@ -49,11 +49,11 @@ class Driver(threading.Thread):
                         if self.p > config.Settings.PEN_PRESSURE_MIN_THRESHOLD:  # Is pen tip on pad?
                             curr_time = event.timestamp()
                             if self._prev_time == 0.0:
-                                self.t = 0.0
+                                self.dt = 0.0
                             else:
-                                self.t = round((curr_time - self._prev_time) * 1000.0, 3)
-                            self.buffer.append((self.x, self.y, self.p, self.t))
-                            self.logger.info("(%d, %d, %d, %.3f)" % (self.x, self.y, self.p, self.t))
+                                self.dt = round((curr_time - self._prev_time) * 1000.0, 3)
+                            self.buffer.append((self.x, self.y, self.p, self.dt))
+                            self.logger.info("(%d, %d, %d, %.3f)" % (self.x, self.y, self.p, self.dt))
                             self._prev_time = curr_time
 
     # Support Functions

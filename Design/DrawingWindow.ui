@@ -289,7 +289,7 @@
       <string>0</string>
      </property>
     </widget>
-    <widget class="QLabel" name="data_t_label">
+    <widget class="QLabel" name="data_dt_label">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -306,10 +306,10 @@
       </font>
      </property>
      <property name="text">
-      <string>t:</string>
+      <string>dt:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="data_t_value">
+    <widget class="QLabel" name="data_dt_value">
      <property name="geometry">
       <rect>
        <x>40</x>
