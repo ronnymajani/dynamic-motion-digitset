@@ -5,7 +5,7 @@ from driver.Server import Server
 CONFIG_FILE_FOLDER = "../settings"  # The path to the configuration file to load on start
 CONFIG_FILE_NAME = "config.json"  # The name of the configuration file
 CONFIG_FILE = CONFIG_FILE_FOLDER + "/" + CONFIG_FILE_NAME
-device_name = "/dev/input/event12"  # The path to the event device file representing the connected Wacom Tablet
+device_name = "/dev/input/event11"  # The path to the event device file representing the connected Wacom Tablet
 
 # Global Objects
 device_server = None  # An instance of the Server class that the program uses

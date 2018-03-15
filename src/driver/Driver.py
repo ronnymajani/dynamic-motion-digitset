@@ -17,7 +17,7 @@ class Driver(threading.Thread):
 
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
-
+        #todo: add automatic detect max and min values for X, Y, P
         self.device = evdev.InputDevice(device)
         self.buffer = []
         self.state = Driver.STATE_IDLE
