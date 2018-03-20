@@ -4,8 +4,8 @@
     ",", 
     ":"
   ], 
-  "EXPORT_DIRECTORY_PATH": "../temp/", 
-  "SAMPLE_COUNT_PER_DIGIT": 4, 
+  "EXPORT_DIRECTORY_PATH": "../output/lab/", 
+  "SAMPLE_COUNT_PER_DIGIT": 10, 
   "DATASET_FILENAME": "dataset.json", 
   "JSON_INDENT_LEVEL": null, 
   "REFRESH_INTERVAL": 15
