@@ -4,7 +4,7 @@
     ",", 
     ":"
   ], 
-  "EXPORT_DIRECTORY_PATH": "../output/lab/", 
+  "EXPORT_DIRECTORY_PATH": "../output/kantin/", 
   "SAMPLE_COUNT_PER_DIGIT": 10, 
   "DATASET_FILENAME": "dataset.json", 
   "JSON_INDENT_LEVEL": null, 
