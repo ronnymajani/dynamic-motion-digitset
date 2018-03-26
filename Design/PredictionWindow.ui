@@ -78,7 +78,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="text">
-      <string>0</string>
+      <string>?</string>
      </property>
      <property name="textFormat">
       <enum>Qt::AutoText</enum>

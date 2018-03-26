@@ -47,6 +47,7 @@ class PredictionWindow(QtGui.QMainWindow, UI_PredictionWindow):
     def event_reset_button_clicked(self):
         self.logger.debug("reset button clicked")
         globals.device_server.reset_digit()
+        self.prediction_digit.setText("?")
 
     # Qt Events
     def closeEvent(self, event):
