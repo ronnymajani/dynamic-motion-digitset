@@ -2,9 +2,9 @@ import sys, os
 from PyQt4 import QtCore, QtGui, uic
 import logging
 
-from PredictionWindow import PredictionWindow
+from prediction.PredictionWindow import PredictionWindow
 
-import globals
+import prediction.globals
 
 
 if __name__ == '__main__':
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     # Initialize Global variables
-    globals.init_globals()
+    prediction.globals.init_globals()
     # Create Qt Application
     logger.info("Creating App")
     app = QtGui.QApplication(sys.argv)

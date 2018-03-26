@@ -8,7 +8,7 @@ import config
 # Set Logging
 logging.basicConfig(level=logging.DEBUG)
 # Import QT Design
-qtCreatorFile = "../../Design/PredictionWindow.ui"
+qtCreatorFile = "../Design/PredictionWindow.ui"
 UI_PredictionWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 
