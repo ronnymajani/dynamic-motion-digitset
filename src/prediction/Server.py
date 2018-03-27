@@ -7,6 +7,7 @@ import numpy as np
 import preprocessing
 
 from keras.models import load_model
+from keras.preprocessing.sequence import pad_sequences
 
 
 class Server(object):
@@ -43,15 +44,12 @@ class Server(object):
         max_seq_len = 301
         mask = -2.0
         digit = self.driver.get_buffer_copy()
-        digit_len = min(len(digit), max_seq_len)
-        digit = np.array(digit[:digit_len])
         digit = preprocessing.apply_mean_centering(digit)
         digit = preprocessing.apply_unit_distance_normalization(digit)
-        dataz = np.empty((max_seq_len, 2))
-        dataz.fill(mask)
-        dataz[:digit_len, :] = digit[:digit_len, :2]
-        dataz = dataz.reshape(1, -1, 2)
-        return self.model.predict_classes(dataz, verbose=1)[0]
+        digit = preprocessing.normalize_pressure_value(digit)
+        digit = preprocessing.convert_xy_to_derivative(digit, True)
+        digit = pad_sequences([digit[:, :]], maxlen=max_seq_len, dtype='float32', padding='pre', truncating='post', value=mask)
+        return self.model.predict_classes(digit, verbose=1)[0]
 
     # Support Functions
     def get_device_resolution_width(self):
