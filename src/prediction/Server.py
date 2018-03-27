@@ -48,7 +48,7 @@ class Server(object):
         digit = preprocessing.apply_unit_distance_normalization(digit)
         digit = preprocessing.normalize_pressure_value(digit)
         digit = preprocessing.convert_xy_to_derivative(digit, True)
-        digit = pad_sequences([digit[:, :]], maxlen=max_seq_len, dtype='float32', padding='pre', truncating='post', value=mask)
+        digit = pad_sequences([digit[:, :2]], maxlen=max_seq_len, dtype='float32', padding='pre', truncating='post', value=mask)
         return self.model.predict_classes(digit, verbose=1)[0]
 
     # Support Functions
