@@ -48,10 +48,10 @@ class Server(object):
         digit = preprocessing.apply_mean_centering(digit)
         digit = preprocessing.apply_unit_distance_normalization(digit)
         digit = preprocessing.normalize_pressure_value(digit)
-        dataz = np.empty((max_seq_len, 3))
+        dataz = np.empty((max_seq_len, 2))
         dataz.fill(mask)
-        dataz[:digit_len, :] = digit[:digit_len, :3]
-        dataz = dataz.reshape(1, -1, 3)
+        dataz[:digit_len, :] = digit[:digit_len, :2]
+        dataz = dataz.reshape(1, -1, 2)
         return self.model.predict_classes(dataz, verbose=1)[0]
 
     # Support Functions
