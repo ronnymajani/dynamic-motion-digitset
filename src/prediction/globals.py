@@ -3,7 +3,7 @@ from Server import Server
 
 # Global Constants
 device_name = "/dev/input/event12"  # The path to the event device file representing the connected Wacom Tablet
-keras_model_name = "prediction/naive-lstm-13-0.95.hdf5"
+keras_model_name = "prediction/naive-lstm-28-0.98.hdf5"
 
 # Global Objects
 device_server = None  # An instance of the Server class that the program uses

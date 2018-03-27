@@ -47,7 +47,6 @@ class Server(object):
         digit = np.array(digit[:digit_len])
         digit = preprocessing.apply_mean_centering(digit)
         digit = preprocessing.apply_unit_distance_normalization(digit)
-        digit = preprocessing.normalize_pressure_value(digit)
         dataz = np.empty((max_seq_len, 2))
         dataz.fill(mask)
         dataz[:digit_len, :] = digit[:digit_len, :2]
