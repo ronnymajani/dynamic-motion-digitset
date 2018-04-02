@@ -107,6 +107,11 @@ class Server(object):
     def reset_digit(self):
         self.driver.clear_buffer()
 
+    def undo_digit(self):
+        self.__decrement_count()
+        data = self.activeDigitSet.pop_last_digit_data(self.currentDigitPhase)
+        self.driver.set_buffer(data)
+
     # State Functions
     def save_digit(self):
         """Save the drawn digit and increment the counter"""
@@ -120,6 +125,28 @@ class Server(object):
         self.__update_count()
 
         # Private Functions
+    def __decrement_count(self):
+        """Called when user undoes a drawn digit"""
+        self.count -= 1
+        if self.count < 0:
+            self.__prev_digit_phase()
+        # Update attached drawing window
+        if self.activeDrawingWindow is not None:
+            times_left = config.Settings.SAMPLE_COUNT_PER_DIGIT - self.count
+            self.activeDrawingWindow.count_progress_bar.setValue(times_left)
+
+    def __prev_digit_phase(self):
+        """Called at the end of every phase"""
+        self.count = config.Settings.SAMPLE_COUNT_PER_DIGIT - 1
+        self.currentDigitPhase -= 1
+        if self.currentDigitPhase < 0:
+            self.currentDigitPhase = 0
+            self.count = 0
+        else:
+            # Update attached drawing window
+            if self.activeDrawingWindow is not None:
+                self.activeDrawingWindow.phase_digit_label.setText(str(self.currentDigitPhase))
+
     def __update_count(self):
         """Called after user saves a drawn digit"""
         self.count += 1

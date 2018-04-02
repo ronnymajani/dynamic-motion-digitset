@@ -61,6 +61,10 @@ class Driver(threading.Thread):
         self.buffer = []
         self._prev_time = 0.0
 
+    def set_buffer(self, new_buffer):
+        self.clear_buffer()
+        self.buffer = new_buffer
+
     def get_buffer_copy(self):
         return copy.copy(self.buffer)
 

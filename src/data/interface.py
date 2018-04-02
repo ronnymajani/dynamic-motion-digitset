@@ -54,6 +54,17 @@ class DigitSet(object):
         else:
             self.data[digit].append(data)
 
+    def pop_last_digit_data(self, digit):
+        """Pops and returns the last data sample added to the specified digit,
+        or returns None if no samples exist for the current digit"""
+        if digit < 0 or digit > 9:
+            raise ValueError("Digit should be in the range [0,9]")
+        else:
+            if len(self.data[digit]) > 0:
+                return self.data[digit].pop()
+            else:
+                return []
+
     def as_json(self):
         # Create JSON Dictionary from DigitSet template
         json_data = DigitSet._TEMPLATE.copy()

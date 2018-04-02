@@ -43,6 +43,7 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
         self.button_next.clicked.connect(self.event_next_button_clicked)
         self.button_reset.clicked.connect(self.event_reset_button_clicked)
         self.button_cancel.clicked.connect(self.event_cancel_button_clicked)
+        self.button_undo.clicked.connect(self.event_undo_button_clicked)
 
     # Our Events (Callback Functions)
     def event_next_button_clicked(self):
@@ -52,6 +53,10 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
     def event_reset_button_clicked(self):
         self.logger.debug("reset button clicked")
         globals.device_server.reset_digit()
+
+    def event_undo_button_clicked(self):
+        self.logger.debug("undo button clicked")
+        globals.device_server.undo_digit()
 
     def event_cancel_button_clicked(self):
         self.logger.debug("cancel button clicked")
@@ -73,6 +78,8 @@ class DrawingWindow(QtGui.QMainWindow, UI_DrawingWindow):
             self.event_next_button_clicked()
         elif QKeyEvent.key() == QtCore.Qt.Key_R:
             self.event_reset_button_clicked()
+        elif QKeyEvent.key() == QtCore.Qt.Key_U:
+            self.event_undo_button_clicked()
         QtGui.QMainWindow.keyPressEvent(self, QKeyEvent)
 
     # Update Function
