@@ -7,7 +7,6 @@ import numpy as np
 import preprocessing
 
 from keras.models import load_model
-from keras.preprocessing.sequence import pad_sequences
 
 
 class Server(object):
@@ -41,14 +40,12 @@ class Server(object):
         self.model = load_model(globals.keras_model_name)
 
     def predict(self):
-        max_seq_len = 301
-        mask = -2.0
         digit = self.driver.get_buffer_copy()
         digit = preprocessing.apply_mean_centering(digit)
         digit = preprocessing.apply_unit_distance_normalization(digit)
         digit = preprocessing.normalize_pressure_value(digit)
-        digit = preprocessing.convert_xy_to_derivative(digit, True)
-        digit = pad_sequences([digit[:, :2]], maxlen=max_seq_len, dtype='float32', padding='pre', truncating='post', value=mask)
+        digit = preprocessing.spline_interpolate_and_resample(digit, 200)
+        digit = np.array([digit])
         return self.model.predict_classes(digit, verbose=1)[0]
 
     # Support Functions
