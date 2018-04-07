@@ -43,6 +43,7 @@ class PredictionWindow(QtGui.QMainWindow, UI_PredictionWindow):
         self.logger.debug("predict button clicked")
         prediction = globals.device_server.predict()
         self.prediction_digit.setText(str(prediction))
+        globals.device_server.reset_digit()
 
     def event_reset_button_clicked(self):
         self.logger.debug("reset button clicked")
