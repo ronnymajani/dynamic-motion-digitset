@@ -1,7 +1,7 @@
 import logging
 
 import globals
-from config import Defaults
+from config import Settings
 from driver.Driver import Driver
 import numpy as np
 import preprocessing
@@ -53,13 +53,13 @@ class Server(object):
 
     # Support Functions
     def get_device_resolution_width(self):
-        return Defaults.RESOLUTION_WIDTH
+        return Settings.RESOLUTION_WIDTH
 
     def get_device_resolution_height(self):
-        return Defaults.RESOLUTION_HEIGHT
+        return Settings.RESOLUTION_HEIGHT
 
     def get_device_pen_resolution(self):
-        return Defaults.PEN_PRESSURE
+        return Settings.PEN_PRESSURE
 
     def attach_active_drawing_window(self, window):
         """Attach the Server to the currently active Drawing Window"""

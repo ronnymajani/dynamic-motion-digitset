@@ -1,5 +1,5 @@
 {
-  "PEN_PRESSURE_MIN_THRESHOLD": 3, 
+  "PEN_PRESSURE_MIN_THRESHOLD": 20, 
   "JSON_SEPARATORS": [
     ",", 
     ":"

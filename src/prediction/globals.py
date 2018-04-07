@@ -2,6 +2,9 @@ import sys
 from Server import Server
 
 # Global Constants
+CONFIG_FILE_FOLDER = "../settings"  # The path to the configuration file to load on start
+CONFIG_FILE_NAME = "config.json"  # The name of the configuration file
+CONFIG_FILE = CONFIG_FILE_FOLDER + "/" + CONFIG_FILE_NAME
 device_name = "/dev/input/event12"  # The path to the event device file representing the connected Wacom Tablet
 keras_model_name = "prediction/model.hdf5"
 
