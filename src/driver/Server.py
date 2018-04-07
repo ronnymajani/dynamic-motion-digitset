@@ -58,7 +58,7 @@ class Server(object):
     def export_digitset(self):
         """Export the current Digit Set
         The file will be named 17.49.01.12.2017_digitset.json"""
-        filepath = config.Settings.EXPORT_DIRECTORY_PATH + time.strftime("%H.%M_%d.%m.%Y") + "_digitset.json"
+        filepath = config.Settings.EXPORT_DIRECTORY_PATH + time.strftime("%Y.%m.%d_%H.%M") + "_digitset.json"
         with open(filepath, "w") as fd:
             json.dump(self.activeDigitSet.as_json(), fd,
                       indent=config.Settings.JSON_INDENT_LEVEL,
