@@ -179,3 +179,5 @@ fabric.properties
 
 
 \.idea/
+
+src/prediction/model\.hdf5

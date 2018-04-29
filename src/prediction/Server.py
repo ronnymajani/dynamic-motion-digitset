@@ -47,9 +47,8 @@ class Server(object):
         if len(digit) > 2:
             digit = preprocessing.apply_mean_centering(digit)
             digit = preprocessing.apply_unit_distance_normalization(digit)
-            digit = preprocessing.normalize_pressure_value(digit)
             try:
-                digit = preprocessing.spline_interpolate_and_resample(digit, 200)
+                digit = preprocessing.spline_interpolate_and_resample(digit, 50)
             except TypeError:
                 # if not enough points are provided to generate a spline, just ignore and go on
                 return None
