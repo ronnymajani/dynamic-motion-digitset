@@ -4,6 +4,8 @@ import logging
 import globals
 import Canvas
 import config
+import threading
+import time
 
 # Set Logging
 logging.basicConfig(level=logging.DEBUG)
@@ -33,16 +35,26 @@ class PredictionWindow(QtGui.QMainWindow, UI_PredictionWindow):
         self.connect(self.timer, QtCore.SIGNAL("timeout()"), self.update_panel)
         self.timer.start()
 
+        self.auto_prediction_task = self._AutoPredictor(self.update_prediction_text)
+        self.auto_prediction_task.start()
+
+    def update_prediction_text(self, prediction):
+        self.prediction_digit.setText(str(prediction))
+
     def register_buttons(self):
         """Register the callback functions for the GUI buttons"""
         self.button_predict.clicked.connect(self.event_predict_button_clicked)
         self.button_reset.clicked.connect(self.event_reset_button_clicked)
 
+    def auto_predict_event(self):
+        self.auto_prediction_task.trigger_prediction()
+
     # Our Events (Callback Functions)
     def event_predict_button_clicked(self):
         self.logger.debug("predict button clicked")
         prediction = globals.device_server.predict()
-        self.prediction_digit.setText(str(prediction))
+        if prediction is not None:
+            self.update_prediction_text(prediction)
         globals.device_server.reset_digit()
 
     def event_reset_button_clicked(self):
@@ -53,6 +65,7 @@ class PredictionWindow(QtGui.QMainWindow, UI_PredictionWindow):
     # Qt Events
     def closeEvent(self, event):
         self.logger.debug("Closing Window...")
+        self.auto_prediction_task.stop()
         # Detach this window from the Server
         globals.device_server.detach_active_drawing_window()
         self.timer.stop()
@@ -85,4 +98,34 @@ class PredictionWindow(QtGui.QMainWindow, UI_PredictionWindow):
         self.canvas.draw(driver.buffer, res_x, res_y, res_p)
         # force QT to repaint window
         self.repaint()
+
+    class _AutoPredictor(threading.Thread):
+        _AUTO_PREDICTION_INTERVAL = 0.05  # seconds
+
+        def __init__(self, output_func):
+            threading.Thread.__init__(self)
+            self.daemon = True
+            self.running = True
+            self._prediction_triggered = False
+            self.logger = logging.getLogger("AutoPredictor")
+            self.logger.setLevel(logging.INFO)
+            self.outputFunc = output_func
+
+        def run(self):
+            while self.running:
+                self.logger.debug("auto predicting...")
+                self._predict()
+                time.sleep(self._AUTO_PREDICTION_INTERVAL)
+
+        def stop(self):
+            self.logger.debug("Stopping Auto Prediction Task...")
+            self.running = False
+
+        def _predict(self):
+            """ Predict what digit has been input so far """
+            self.logger.debug("auto predicting...")
+            with globals.keras_graph.as_default():
+                prediction = globals.device_server.predict()
+                if prediction is not None:
+                    self.outputFunc(prediction)
 

@@ -7,6 +7,7 @@ import numpy as np
 import preprocessing
 
 from keras.models import load_model
+import tensorflow as tf
 
 
 class Server(object):
@@ -38,15 +39,24 @@ class Server(object):
 
         # load keras model
         self.model = load_model(globals.keras_model_name)
+        self.model._make_predict_function()	# have to initialize before threading
+        globals.keras_graph = tf.get_default_graph()
 
     def predict(self):
         digit = self.driver.get_buffer_copy()
-        digit = preprocessing.apply_mean_centering(digit)
-        digit = preprocessing.apply_unit_distance_normalization(digit)
-        digit = preprocessing.normalize_pressure_value(digit)
-        digit = preprocessing.spline_interpolate_and_resample(digit, 200)
-        digit = np.array([digit])
-        return self.model.predict_classes(digit, verbose=1)[0]
+        if len(digit) > 2:
+            digit = preprocessing.apply_mean_centering(digit)
+            digit = preprocessing.apply_unit_distance_normalization(digit)
+            digit = preprocessing.normalize_pressure_value(digit)
+            try:
+                digit = preprocessing.spline_interpolate_and_resample(digit, 200)
+            except TypeError:
+                # if not enough points are provided to generate a spline, just ignore and go on
+                return None
+            digit = np.array([digit])
+            return self.model.predict_classes(digit, verbose=0)[0]
+        else:
+            return None
 
     # Support Functions
     def get_device_resolution_width(self):

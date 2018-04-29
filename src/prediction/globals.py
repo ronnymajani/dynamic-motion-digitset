@@ -10,6 +10,7 @@ keras_model_name = "prediction/model.hdf5"
 
 # Global Objects
 device_server = None  # An instance of the Server class that the program uses
+keras_graph = None
 
 
 def init_globals():
